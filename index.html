@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sárkánykártya Társasjáték</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="icon-192.png" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').then(() => {
+        console.log("✔ Service Worker regisztrálva.");
+      });
+    }
+  </script>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0.5em; background: #fdf6e3; text-align: center; }
+    .container { display: flex; flex-direction: column; align-items: center; max-width: 600px; margin: auto; }
+    .board { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; width: 100%; }
+    .cell { aspect-ratio: 1 / 1; display: flex; justify-content: center; align-items: center; border: 1px solid #999;
+            font-size: 14px; position: relative; background: #fff; }
+    .help { background-color: lightgreen; }
+    .trap { background-color: tomato; }
+    .dragon { background-color: gold; }
+    .player { position: absolute; font-weight: bold; font-size: 20px; }
+    .legend { margin-top: 10px; font-size: 0.9em; }
+    .legend div { margin: 3px 0; }
+    .p0 { color: red; } .p1 { color: blue; } .p2 { color: green; } .p3 { color: purple; }
+    button { font-size: 1rem; padding: 10px 16px; margin: 5px; border-radius: 10px; border: none;
+             background-color: #444; color: white; }
+    button:hover { background-color: #222; }
+    #playerButtons { display: flex; flex-wrap: wrap; justify-content: center; }
+    #directionControls button { font-size: 1.5rem; margin: 5px; width: 50px; height: 50px; }
+    @media (max-width: 480px) {
+      .board { grid-template-columns: repeat(6, 1fr); }
+      .cell { font-size: 12px; }
+      button { width: 90%; max-width: 300px; margin: 5px auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sárkánykártya Társasjáték</h1>
+    <div class="legend">
+      <div><strong>🟩 Segítség mező</strong> – +1 kártya, előrelépés, vagy csere a leggazdagabbal</div>
+      <div><strong>🟥 Hátráltatás mező</strong> – -1 kártya, hátralépés, vagy csere a legszegényebbel</div>
+      <div><strong>🟨 Sárkány mező</strong> – +1 sárkánykártya</div>
+      <div><strong>🎲 Játékosok:</strong> <span class="p0">Tűzsárkány</span>, <span class="p1">Vízsárkány</span>,
+      <span class="p2">Földsárkány</span>, <span class="p3">Levegősárkány</span></div>
+    </div>
+    <div id="scores"></div>
+    <div id="board" class="board"></div>
+    <div id="directionControls"></div>
+    <div id="playerButtons"></div>
+    <p id="diceResult"></p>
+    <div id="log"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
